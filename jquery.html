@@ -1,0 +1,44 @@
+<!-- MVP设计模式 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>TodoList Jquery</title>
+	<script src="./js/jquery.js"></script>
+</head>
+<body>
+	<div>
+		<input id="input" type="text" />
+		<button id="btn">提交</button>
+		<ul id="list"></ul>
+	</div>
+	<script>
+		// M 模型层 V 视图 P 控制器(核心)
+		// 控制器通过dom层改变视图
+		function Page(){
+
+		}
+
+		$.extend(Page.prototype, {
+			init: function(){
+				this.bindEvents()
+			},
+			bindEvents: function(){
+				var btn = $('#btn');
+				btn.on('click', $.proxy(this.handleBtnClick, 
+					this))
+			},
+			handleBtnClick: function(){
+				var inputElem = $("#input");
+				var inputValue = $("#input").val();                          /*获取input框内容*/
+				var ulElem = $("#list");
+				ulElem.append('<li>' + inputValue + '</li>');
+				inputElem.val('');
+			}
+		})
+
+		var page = new Page();
+		page.init();
+	</script>
+</body>
+</html>

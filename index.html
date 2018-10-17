@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Hello World</title>
+	<script src='./js/vue.js'></script>
+</head>
+<body>
+	<div id="app">{{content}}</div>           <!-- 调用data里的所有数据 -->
+	
+	<script>
+		/*var dom = document.getElementById('app');
+		dom.innerHTML = 'hello world!'*/
+		/*setTimeout(function(){              //隔两秒改变hello world的内容
+			dom.innerHTML = 'bye world!'
+		}, 2000)*/
+
+		var app = new Vue({               //创建一个vue实例
+			el: '#app',                   //el指实例负责管理的区域，接管 id=app 的dom标签里的所有内容
+			data:{
+				content:'hello world'
+			}
+		})
+
+		setTimeout(function(){
+			app.$data.content = 'bye world'
+		}, 2000)
+	</script>
+</body>
+</html>
