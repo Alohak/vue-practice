@@ -24,14 +24,22 @@
 
 	<script>
 		
-		Vue.component("TodoItem", {                 /*vue提供的创建全局组建的方法*/ /*定义一个（全局）组件叫TodoItem*/
-			props: ['content'],                        /*从父组件接收内容*/
-			template: "<li>{{content}}</li>"
-		})         
+		//Vue.component("TodoItem", {                 /*vue提供的创建全局组建的方法*/ /*定义一个（全局）组件叫TodoItem*/
+		//	props: ['content'],                        /*从父组件接收内容*/
+		//	template: "<li>{{content}}</li>"
+		//})         
+		
+		var TodoItem = {                      /*局部组件*/
+			props: ['content'],               /*外部传递过来的数据，如果要接收就定义到props中*/
+			template: "<li>{{content}}</li>"  /*组件的模板，用这个组件会被组件模板里的内容替换*/
+		}
 
 		// M V VM
 		var app = new Vue({
 			el:'#root',
+			components: {
+				TodoItem: TodoItem           /*把TodoItem注册到vue实例中*/
+			},
 			data:{
 				todoValue: "",
 				list:[]
