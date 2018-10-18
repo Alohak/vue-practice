@@ -16,22 +16,43 @@
 			<!-- <li v-for="item in list">     v-for:循环数据，这里把list中的每一项当做item循环
 				{{item}}
 			</li> -->
-			<todo-item v-bind:content="item" v-for="item in list"></todo-item> <!-- v-bind指向子组件传入一个绑定值 -->
-			                              <!-- 通过list决定到底循环输出多少个TodoItem这个组件， -->
-			                              <!-- 同时把每一个list项的内容通过v-bind，借助content传给todoitem -->
+			<todo-item v-bind:content="item"
+					   v-bind:index="index" 
+			           v-for="(item, index) in list"
+			           @delete="handleItemDelete">    <!-- v-bind指向子组件传入一个绑定值 -->
+			                                          <!-- 通过list决定到底循环输出多少个TodoItem这个组件， -->
+			                                    <!-- 同时把每一个list项的内容通过v-bind，借助content传给todoitem -->
+			</todo-item>                  
 		</ul>
 	</div>
 
 	<script>
 		
-		Vue.component("TodoItem", {                 /*vue提供的创建全局组建的方法*/ /*定义一个（全局）组件叫TodoItem*/
-			props: ['content'],                        /*从父组件接收内容*/
-			template: "<li>{{content}}</li>"
-		})         
+		//Vue.component("TodoItem", {                 /*vue提供的创建全局组建的方法*/ /*定义一个（全局）组件叫TodoItem*/
+		//	props: ['content'],                        /*从父组件接收内容*/
+		//	template: "<li>{{content}}</li>"
+		//})         
+
+		var TodoItem = {                      /*局部组件*/
+			props: ['content', 'index'],               /*外部传递过来的数据，如果要接收就定义到props中*/
+			template: "<li @click='handleItemClick'>{{content}}</li>",/*组件的模板，用这个组件会被组件模板里的内容替换*/
+			methods: {
+				handleItemClick: function(){
+					this.$emit("delete", this.index);                /*点击子组件，子组件向外触发一个delete事件*/
+				}
+			}
+		
+		var TodoItem = {                      /*局部组件*/
+			props: ['content'],               /*外部传递过来的数据，如果要接收就定义到props中*/
+			template: "<li>{{content}}</li>"  /*组件的模板，用这个组件会被组件模板里的内容替换*/
+		}
 
 		// M V VM
 		var app = new Vue({
 			el:'#root',
+			components: {
+				TodoItem: TodoItem           /*把TodoItem注册到vue实例中*/
+			},
 			data:{
 				todoValue: "",
 				list:[]
@@ -41,9 +62,15 @@
 				handleBtnClick:function(){
 					this.list.push(this.inputValue),
 					this.inputValue = ''
+				},
+				handleItemDelete: function(index){
+					this.list.splice(index, 1)
 				}
 			}
 		})
+		/*通过父组件v-bind向子组件传值，子组件接收；
+		  子组件通过$emit，向上一层触发事件，父组件监听，获取子组件传递的内容，实现传值。
+		  v-bind可以简写为‘：’，即‘：index="index"’='v-bind:"index"'。*/
 	</script>
 </body>
 </html>
