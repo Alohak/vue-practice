@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>模板语法</title>
+	<script src="../js/vue.js"></script>
+</head>
+<body>
+	<!-- 模板中不止能写变量，还能写表达式 -->
+	<div id="app">
+		<div v-text="name"></div>   <!-- 让div里的innerTEXT的内容变成data里数据的内容,把h1做了转译，所以没有改变样式 -->
+		<div v-html="name +' Lee'"></div>   <!-- 让div里的innerHTML内容和name数据变量绑定 -->
+		<div>{{name+' Lee'}}</div>         <!-- 插值表达式 -->
+		<!-- vue上还有很多模板语法     v-on:click="handleClick"   v-bind:title="name" -->
+	</div>
+	<script>
+		var vm = new Vue({
+			el: "#app",
+			data: {
+				name:"Dell"
+			}
+		})
+	</script>
+</body>
+</html>
