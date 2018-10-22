@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Vue中的条件渲染</title>
+	<script src="../js/vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<div v-if="show">{{message}}</div>      <!-- 决定div标签是否真实的挂载在页面上 -->   
+		<div v-else=>Bye world</div>     <!-- v-if和v-else要紧贴在一起使用 -->  	 
+
+
+		<!-- <div v-show="show">{{message}}</div> -->
+		<!-- 
+		v-show和v-if都能控制一个模板标签是否在页面上显示，
+		v-if的变量为false时，不存在于dom之上；
+		v-show的变量为false时，标签对应的dom在页面上存在，形式为display:none。性能更高，因为不会频繁的把dom从页面上删除添加。
+		 -->
+	</div>
+
+	<script>
+		var vm = new Vue({
+			el: "#app",
+			data: {
+				show: false,
+				message: "Hello world"
+			}
+		})
+	</script>
+</body>
+</html>

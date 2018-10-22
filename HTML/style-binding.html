@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Vue中的样式绑定</title>
+	<script src="../js/vue.js"></script>
+	<!-- <style>
+		.activated {
+			color: red;
+		}
+	</style> -->
+</head>
+<body>
+	<div id="app">
+		<!-- 
+		<div @click="handleDivClick"
+			:class="{activated: isActicated}"    
+		>                                //div上有一个class，显不显示取决于isActicated变量,此为class的对象绑定
+			Hello world
+		</div>
+		 -->
+
+		<!-- 
+		<div @click="handleDivClick"
+			:class="[activated]"
+		>                     //class和数组绑定，class会显示变量上对应的内容
+			Hello world
+		</div>
+		 -->
+
+		 <div :style="styleObj" @click="handleDivClick">     <!-- 通过对象绑定 -->
+		 	Hello world
+		 </div>
+	</div>
+
+	<script>
+		/*var vm = new Vue({
+			el:"#app",
+			data: {
+				isActicated: false
+			},
+			methods: {
+				handleDivClick: function(){
+					this.isActicated = !this.isActicated;
+				}
+			}
+		})*/
+
+		/*var vm = new Vue({
+			el: "#app",
+			data: {
+				activated: ""
+			},
+			methods: {
+				handleDivClick: function() {
+					if (this.activated === "activated") {
+						this.activated = "";
+					}else {
+						this.activated = "activated";
+					}
+				}
+			}
+			// methods: {
+			// 	handleDivClick: function() {
+			// 		this.activated = this.activated === "activated" ? "" : "activated";
+			// 	}
+			// }
+		})*/
+
+		var vm = new Vue({
+			el: "#app",
+			data: {
+				styleObj: {
+					color: "black"
+				}
+			},
+			methods: {
+				handleDivClick: function(){
+					this.styleObj.color = this.styleObj.color === "black" ? "red" : "black";
+				}
+			}
+		})
+	</script>
+</body>
+</html>
