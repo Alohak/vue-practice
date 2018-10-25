@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>组件参数校验与非Props特性</title>
+	<!-- 父组件向子组件专递参数，子组件有权对这些参数进行约束 -->
+	<script src="../js/vue.js"></script>
+</head>
+<body>
+	<div id="root">
+		<child content="hello world"></child>
+	</div>
+
+	<div>
+		<script>
+
+			Vue.component('child', {
+				props: {     //props特性:当父组件使用子组件时，通过属性向子组件传值时，
+					         //恰好子组件里声明了对父组件传递的接收，这里即content,
+					         //当父组件传递，子组件接收，子组件里可直接通过插值表达式取得内容。
+					         //非Props特性:1.父组件向子组件传递一个属性，但子组件没有props内容，
+					         //也就是子组件并没有声明要接收父组件传递过来的内容。
+					         //2.非props属性会展示在子组件最外层dom标签的html属性里。
+					//content: String          /*子组件接收到的content属性必须是String(字符串)类型*/
+					//content:Number         /*number类型*/
+					//content: [Number, String]       /*要么是数字，要么是字符串*/
+					content: {
+						type:String,
+						// required: false,            /*true则content必传*/
+						// default: 'default value'          /*required:false则可传可不传，不传则接收默认值*/
+						validator: function(value) {
+							return (value.length > 5)/*子组件接收的属性名字叫content,类型为字符串，传入的内容长度大于5*/
+						}
+					}  
+				},
+				template: '<div>{{content}}</div>'
+			})
+
+			var vm = new Vue({
+				el: "#root"
+			})
+		</script>
+	</div>
+</body>
+</html>

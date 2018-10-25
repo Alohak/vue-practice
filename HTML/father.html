@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>父子组件传值</title>
+	<script src="../js/vue.js"></script>
+</head>
+<body>
+	<div id="root">
+		<counter :count="1" @change="handleIncrease"></counter>
+		<counter :count="2" @change="handleIncrease"></counter>
+		<div>{{total}}</div>
+	</div>
+
+	<script>
+		//vue中有单向数据流的概念，也就是父组件可以向子组件通过属性传递参数，可以随便修改，
+		//但子组件不能修改父组件传递过来的参数
+		var counter = {
+			props: ['count'],
+			data: function() {
+				return {
+					number: this.count
+				}
+			},
+			template: '<div @click="handleClick">{{number}}</div>',
+			methods: {
+				handleClick: function() {
+					this.number ++;
+					this.$emit('change', 1)
+				}
+			}
+		}
+
+		var vm = new Vue({
+			el: "#root",
+			data: {
+				total: 3
+			},
+			components: {
+				counter: counter
+			},
+			methods: {
+				handleIncrease: function(step) {
+					this.total += step;
+				}
+			}
+		})
+	</script>
+</body>
+</html>
